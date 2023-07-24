@@ -14,6 +14,8 @@ A CLI Tool for Network Namespace Management and Veth Connection
 4. To see all the available commands:   
     `sudo ./netns_tool.py --help`
 
+N.B. `iproute2` package should be installed on the system.
+
 ### Creating a new network namespace
 For creating a new network namespace, type the following command:   
     `sudo ./netns_tool.py create <namespace_name>`   
