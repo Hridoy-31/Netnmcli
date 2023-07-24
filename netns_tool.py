@@ -41,6 +41,20 @@ def connect_nmspaces(namespace_name1, namespace_name2):
         print(f"Error: Failed to connect network namespaces {namespace_name1} and {namespace_name2}.")
         
 
+def list_nmspaces():
+    try:
+        namespace_list = subprocess.check_output(["ip", "netns", "list"])
+        # subprocess.check_output returns byte strings. So, decode() method is used to convert the byte strings
+        # to the regular strings.
+        namespaces = namespace_list.decode().splitlines()
+        print("Existing network namespaces: ")
+        for namespace in namespaces:
+            print(namespace)
+    except subprocess.CalledProcessError:
+        print("Error: Failed to list existing network namespaces.")
+
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="""A Tool for Network Namespace Management 
@@ -49,17 +63,23 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     """
-    "Create" command subparsers
+    "create" command subparsers
     """
     create_parser = subparsers.add_parser("create", help="Create a new network namespace.")
     create_parser.add_argument("namespace_name", help="Name of the new network namespace.")
 
     """
-    "Connect" command subparsers
+    "connect" command subparsers
     """
     connect_parser = subparsers.add_parser("connect", help="Connect two network namespaces with veth pair.")
     connect_parser.add_argument("namespace_name1", help="Name of the first network namespace for creating a connection.")
     connect_parser.add_argument("namespace_name2", help="Name of the other network namespace to be connected with the first network namespace")
+
+    """
+    "list" command subparsers
+    """
+    list_parser = subparsers.add_parser("list", help="List all existing network namespaces.")
+
 
 
     # parsing the arguments from command and storing in args
@@ -69,3 +89,5 @@ if __name__ == "__main__":
         create_nmspace(args.namespace_name)
     elif args.command == "connect":
         connect_nmspaces(args.namespace_name1, args.namespace_name2)
+    elif args.command == "list":
+        list_nmspaces()
