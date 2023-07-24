@@ -16,3 +16,9 @@ For creating a new network namespace, type the following command:
     `sudo ./netns_tool.py create <namespace_name>`   
     where, `<namespace_name>` will be the name of the network namespace that you want to create.
 
+### Connecting two network namespaces with veth pair
+For connecting two existing network namespaces with veth pair, type the following command:   
+    `sudo ./netns_tool.py connect <namespace_name1> <namespace_name2>`   
+    where, `<namespace_name1>` is the name of first network namespace for creating a connection. On the other hand, `<namespace_name2>` is the name of the other network namespace that we want to connect with the first network namespace.
+
+ 
