@@ -47,9 +47,12 @@ def list_nmspaces():
         # subprocess.check_output returns byte strings. So, decode() method is used to convert the byte strings
         # to the regular strings.
         namespaces = namespace_list.decode().splitlines()
-        print("Existing network namespaces: ")
-        for namespace in namespaces:
-            print(namespace)
+        if (len(namespaces)==0):
+            print("No network namespaces exist.")
+        else:
+            print("Existing network namespaces: ")
+            for namespace in namespaces:
+                print(namespace)
     except subprocess.CalledProcessError:
         print("Error: Failed to list existing network namespaces.")
 
